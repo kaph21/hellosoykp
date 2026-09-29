@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Kery Pérez | Tecnología, equipos y proyectos digitales</title>
+  <meta name="description" content="Más de 10 años en tecnología ordenando equipos, procesos y proyectos. Aprendizajes, recursos y mentorías para trabajar con más claridad.">
+  <meta name="theme-color" content="#F7F6F3">
+
+  <!-- Open Graph (cuando tengas una imagen, agrega og:image con URL absoluta) -->
+  <meta property="og:title" content="Kery Pérez | Tecnología, equipos y proyectos digitales">
+  <meta property="og:description" content="Trayectoria, recursos, contenido y newsletter en un solo lugar.">
+  <meta property="og:type" content="website">
+
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%2317233D'/%3E%3Ctext x='32' y='42' font-family='Georgia,serif' font-style='italic' font-weight='bold' font-size='28' text-anchor='middle' fill='%23B8B8FF'%3EKP%3C/text%3E%3C/svg%3E">
+
+  <!-- Tipografías: si prefieres cero dependencias externas, elimina estas 3 líneas;
+       el CSS ya tiene fuentes de respaldo. -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,600;1,700&display=swap" rel="stylesheet">
+
+  <style>
+    /* ============================================================
+       TOKENS DE DISEÑO
+       Paleta provisional: cambia estos valores y toda la página se actualiza.
+       ============================================================ */
+    :root {
+      /* Paleta tomada del portafolio (kaph21.github.io/portafolio).
+         Cambia estos valores y toda la página se actualiza. */
+      --bg:        #F7F6F3;   /* papel: fondo */
+      --surface:   #FFFFFF;   /* tarjetas de enlaces */
+      --ink:       #17233D;   /* azul marino: texto y tarjeta de newsletter */
+      --muted:     #667085;   /* texto secundario */
+      --line:      #E2E5EC;   /* bordes finos */
+      --tint:      #ECECFF;   /* índigo suave: fondo de iconos y etiquetas */
+      --accent:    #5B5BD6;   /* índigo: acento principal */
+      --terra:     #D97757;   /* terracota: botón del newsletter */
+      --terra-hi:  #E28A6D;
+      --on-dark:   #D4D9E3;   /* texto secundario sobre marino */
+      --on-dark-2: #B4BCCB;
+      --ok:        #B8B8FF;   /* mensaje de éxito sobre marino */
+      --err:       #FFB4A0;   /* mensaje de error sobre marino */
+
+      --font-display: "Playfair Display", Georgia, "Times New Roman", serif;
+      --font-heading: "Manrope", "DM Sans", system-ui, sans-serif;
+      --font-body: "DM Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+
+      --radius-lg: 22px;
+      --radius-md: 16px;
+      --shadow: 0 14px 40px rgba(23, 35, 61, .07);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    html { -webkit-text-size-adjust: 100%; }
+    @media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at 80% 0%, rgba(91, 91, 214, .10), transparent 42%) no-repeat,
+        var(--bg);
+      background-size: 100% 460px, auto;
+      color: var(--ink);
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .page {
+      width: 100%;
+      max-width: 480px;
+      margin: 0 auto;
+      padding: 40px 20px 32px;
+    }
+
+    :focus-visible {
+      outline: 3px solid var(--accent);
+      outline-offset: 3px;
+      border-radius: 10px;
+    }
+
+    .visually-hidden {
+      position: absolute !important;
+      width: 1px; height: 1px;
+      margin: -1px; padding: 0;
+      overflow: hidden;
+      clip: rect(0 0 0 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    /* ============================================================
+       CABECERA
+       ============================================================ */
+    .profile { text-align: center; margin-bottom: 30px; }
+
+    .avatar {
+      width: 92px; height: 92px;
+      margin: 0 auto 18px;
+      border-radius: 50%;
+      background: var(--tint);
+      color: var(--accent);
+      display: grid; place-items: center;
+      font-family: var(--font-display);
+      font-style: italic;
+      font-weight: 700;
+      font-size: 34px;
+      letter-spacing: 0.01em;
+      overflow: hidden;
+    }
+    .avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    .profile h1 {
+      margin: 0 0 6px;
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 2.3rem;
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+    }
+    .profile .role {
+      margin: 0 0 12px;
+      font-family: var(--font-heading);
+      font-weight: 700;
+      color: var(--ink);
+    }
+    .profile .bio {
+      margin: 0 auto;
+      max-width: 38ch;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    /* Redes rápidas: justo debajo de la presentación */
+    .quick { display: flex; justify-content: center; gap: 12px; margin: 22px 0 0; padding: 0; list-style: none; }
+    .quick a {
+      display: grid; place-items: center;
+      width: 48px; height: 48px;
+      border: 1px solid var(--line);
+      border-radius: 50%;
+      background: var(--surface);
+      transition: border-color .15s ease;
+    }
+    .quick a:hover { border-color: var(--accent); }
+    .quick svg { width: 22px; height: 22px; stroke: var(--ink); fill: none; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+
+    /* ============================================================
+       ENLACES
+       ============================================================ */
+    .links { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
+    .links--section { margin-top: 28px; }
+
+    .link {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 14px 16px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-md);
+      color: inherit;
+      text-decoration: none;
+      box-shadow: var(--shadow);
+      transition: border-color .15s ease, transform .15s ease;
+    }
+    .link:hover { border-color: var(--accent); }
+    .link:active { transform: scale(0.99); }
+
+    .link .icon {
+      flex: none;
+      width: 44px; height: 44px;
+      display: grid; place-items: center;
+      background: var(--tint);
+      border-radius: 12px;
+    }
+    .link .icon svg { width: 22px; height: 22px; stroke: var(--accent); fill: none; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+
+    .link .text { flex: 1; min-width: 0; }
+    .link .title { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 8px; font-family: var(--font-heading); font-weight: 800; line-height: 1.25; }
+    .link .desc  { display: block; margin-top: 2px; color: var(--muted); font-size: 0.86rem; line-height: 1.35; }
+
+    /* Invitación a la lista de interés (lleva al newsletter) */
+    .cue {
+      display: inline-block;
+      margin-top: 6px;
+      color: var(--accent);
+      font-family: var(--font-heading);
+      font-size: 0.84rem;
+      font-weight: 800;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    /* Botones grandes (Instagram y TikTok) */
+    .links--big { margin-top: 12px; }
+    .link--big { padding: 20px 18px; gap: 16px; }
+    .link--big .icon { width: 54px; height: 54px; background: var(--accent); border-radius: 15px; }
+    .link--big .icon svg { width: 26px; height: 26px; stroke: #FFFFFF; }
+    .link--big .title { font-size: 1.12rem; }
+    .link--big .desc { font-size: 0.9rem; margin-top: 4px; }
+
+    .link .chev { flex: none; width: 18px; height: 18px; stroke: var(--muted); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+    /* ============================================================
+       NEWSLETTER: tarjeta diferenciada (fondo oscuro, no es un botón)
+       ============================================================ */
+    .newsletter {
+      scroll-margin-top: 20px;
+      margin: 28px 0 24px;
+      padding: 26px 22px 22px;
+      background: var(--ink);
+      color: #FFFFFF;
+      border-radius: var(--radius-lg);
+    }
+    .newsletter h2 {
+      margin: 0 0 8px;
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 1.7rem;
+      line-height: 1.15;
+      letter-spacing: -0.01em;
+    }
+    .newsletter .pitch {
+      margin: 0 0 20px;
+      color: var(--on-dark);
+      font-size: 0.95rem;
+    }
+
+    .field { display: grid; gap: 10px; }
+
+    .newsletter input[type="email"] {
+      width: 100%;
+      padding: 14px 16px;
+      font: inherit;
+      font-size: 1rem; /* 16px evita el zoom automático en iOS */
+      color: var(--ink);
+      background: #FFFFFF;
+      border: 2px solid transparent;
+      border-radius: 14px;
+    }
+    .newsletter input[type="email"]::placeholder { color: #7A8394; }
+    .newsletter input[type="email"]:focus-visible { outline: 3px solid var(--ok); outline-offset: 2px; }
+    .newsletter input[type="email"][aria-invalid="true"] { border-color: var(--err); }
+
+    .btn {
+      width: 100%;
+      padding: 14px 16px;
+      font: inherit;
+      font-family: var(--font-heading);
+      font-weight: 800;
+      color: var(--ink);
+      background: var(--terra);
+      border: 0;
+      border-radius: 14px;
+      cursor: pointer;
+      transition: background .15s ease, transform .15s ease;
+    }
+    .btn:hover { background: var(--terra-hi); }
+    .btn:active { transform: scale(0.99); }
+    .btn:focus-visible { outline: 3px solid #FFFFFF; outline-offset: 3px; }
+    .btn[disabled] { opacity: .65; cursor: progress; }
+
+    /* Bloque anti-bots (honeypot). Los humanos no lo ven. */
+    .hp { position: absolute; left: -9999px; height: 0; overflow: hidden; }
+
+    /* Mensajes de estado. Están siempre en el DOM para que los lectores
+       de pantalla los anuncien (aria-live), pero vacíos hasta que se usan. */
+    .msg { margin: 12px 0 0; min-height: 0; font-size: 0.92rem; line-height: 1.4; }
+    .msg:empty { display: none; }
+    .msg.is-success { color: var(--ok); }
+    .msg.is-error   { color: var(--err); }
+
+    .fineprint { margin: 14px 0 0; color: var(--on-dark-2); font-size: 0.82rem; }
+
+    /* ============================================================
+       PIE
+       ============================================================ */
+    footer { margin-top: 28px; text-align: center; color: var(--muted); font-size: 0.8rem; }
+
+    @media (prefers-reduced-motion: reduce) {
+      * { transition: none !important; }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="page">
+
+    <!-- ============================================================
+         PERFIL + REDES RÁPIDAS
+         Copy provisional. SEO se menciona como evolución, no como cargo
+         ni categoría de navegación (sigue en exploración).
+         ============================================================ -->
+    <header class="profile">
+      <div class="avatar" aria-hidden="true">
+        <!-- Para usar tu foto: reemplaza "KP" por
+             <img src="assets/kery.jpg" alt="Kery Pérez"> y quita aria-hidden del contenedor -->
+        KP
+      </div>
+      <h1>Hello, soy KP <span aria-hidden="true">👋</span></h1>
+      <p class="role">Tecnología, equipos y proyectos digitales</p>
+      <p class="bio">Más de 10 años en tecnología ordenando proyectos, procesos y equipos para que el trabajo fluya. Comparto lo que aprendo en el camino, ahora también con SEO y optimización digital.</p>
+
+      <!-- Reemplaza cada href="#" por tu perfil real.
+           LinkedIn y correo ya usan los datos públicos de tu portafolio. -->
+      <ul class="quick" aria-label="Redes y contacto rápido">
+        <li>
+          <a href="https://www.linkedin.com/in/kandreinaperez/" aria-label="LinkedIn de Kery Pérez" rel="me noopener" target="_blank">
+            <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 11v6M8 7.5v.01M12 17v-6M12 13.5c0-1.4 1-2.5 2.5-2.5S17 12 17 13.5V17"/></svg>
+          </a>
+        </li>
+        <li>
+          <a href="https://www.instagram.com/hellosoykp?stkn=OGl0bmN3b3R3NWM5" aria-label="Instagram de Kery Pérez" rel="me noopener" target="_blank">
+            <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><path d="M17.5 6.5v.01"/></svg>
+          </a>
+        </li>
+        <li>
+          <a href="https://www.tiktok.com/@hellosoykp?_r=1&amp;_t=ZS-9A91im2DXok" aria-label="TikTok de Kery Pérez" rel="me noopener" target="_blank">
+            <svg viewBox="0 0 24 24"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/></svg>
+          </a>
+        </li>
+        <li>
+          <a href="mailto:kery.aph@gmail.com" aria-label="Enviar un correo a Kery Pérez">
+            <svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
+          </a>
+        </li>
+      </ul>
+    </header>
+
+    <!-- ============================================================
+         QUIÉN SOY → QUÉ SÉ HACER → CÓMO PUEDO AYUDARTE → RECURSOS
+         Reemplaza cada href="#" por la URL real cuando exista.
+         - Mi trayectoria → portafolio en GitHub.
+         - Mentorías 1:1 y Recursos & Plantillas siguen EN CONSTRUCCIÓN:
+           sin precios, metodología, duración ni recursos inventados.
+           Mientras tanto ambas llevan al formulario del newsletter (#newsletter),
+           que funciona como lista de interés. Cuando existan, cambia su href
+           por la página/oferta real y quita el texto "Quiero enterarme".
+         ============================================================ -->
+    <ul class="links links--section">
+      <li>
+        <a class="link" href="https://kaph21.github.io/portafolio/" data-link="trayectoria" rel="noopener" target="_blank">
+          <span class="icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><circle cx="6" cy="19" r="3"/><path d="M9 19h8.5a3.5 3.5 0 0 0 0-7h-11a3.5 3.5 0 0 1 0-7H15"/><circle cx="18" cy="5" r="3"/></svg>
+          </span>
+          <span class="text">
+            <span class="title">Mi trayectoria</span>
+            <span class="desc">Experiencia y proyectos en mi portafolio de GitHub</span>
+          </span>
+          <svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+        </a>
+      </li>
+      <li>
+        <a class="link" href="#" data-link="equipos">
+          <span class="icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><path d="M3 20v-1a5 5 0 0 1 5-5h2a5 5 0 0 1 5 5v1"/><path d="M16 5.2a3 3 0 0 1 0 5.6M21 20v-1a5 5 0 0 0-3-4.6"/></svg>
+          </span>
+          <span class="text">
+            <span class="title">Cómo gestiono equipos</span>
+            <span class="desc">Organización, prioridades, procesos y liderazgo: mi forma de trabajar</span>
+          </span>
+          <svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+        </a>
+      </li>
+      <li>
+        <a class="link" href="#newsletter" data-link="mentorias">
+          <span class="icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22z"/></svg>
+          </span>
+          <span class="text">
+            <span class="title">Mentorías 1:1</span>
+            <span class="desc">Acompañamiento individual para retos profesionales concretos</span>
+            <span class="cue">Quiero enterarme</span>
+          </span>
+          <svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+        </a>
+      </li>
+      <li>
+        <a class="link" href="#newsletter" data-link="recursos">
+          <span class="icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="m9 14 2 2 4-4"/></svg>
+          </span>
+          <span class="text">
+            <span class="title">Recursos &amp; Plantillas</span>
+            <span class="desc">Plantillas, guías y checklists prácticos para organizar proyectos y equipos, que voy construyendo</span>
+          </span>
+          <svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+        </a>
+      </li>
+    </ul>
+
+    <!-- ============================================================
+         DÓNDE ENCONTRAR MI CONTENIDO (botones grandes)
+         ============================================================ -->
+    <ul class="links links--big">
+      <li>
+        <a class="link link--big" href="https://www.instagram.com/hellosoykp?stkn=OGl0bmN3b3R3NWM5" data-link="instagram" rel="me noopener" target="_blank">
+          <span class="icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><path d="M17.5 6.5v.01"/></svg>
+          </span>
+          <span class="text">
+            <span class="title">Instagram</span>
+            <span class="desc">Contenido práctico, carruseles y recursos para trabajar mejor</span>
+          </span>
+          <svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+        </a>
+      </li>
+      <li>
+        <a class="link link--big" href="https://www.tiktok.com/@hellosoykp?_r=1&amp;_t=ZS-9A91im2DXok" data-link="tiktok" rel="me noopener" target="_blank">
+          <span class="icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/></svg>
+          </span>
+          <span class="text">
+            <span class="title">TikTok</span>
+            <span class="desc">Ideas prácticas, herramientas, aprendizajes y recursos gratuitos</span>
+          </span>
+          <svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+        </a>
+      </li>
+    </ul>
+
+    <!-- ============================================================
+         NEWSLETTER / CAPTACIÓN DE EMAIL
+         ------------------------------------------------------------
+         ESTADO: preparado, SIN conectar a ningún servicio.
+         Mientras NEWSLETTER.endpoint esté vacío, el formulario muestra
+         un mensaje de "aún no disponible" y NO envía nada a ninguna parte.
+
+         Este sitio es estático (GitHub Pages): no guarda emails.
+         Los correos deben viajar directo al proveedor que elijas.
+
+         CÓMO CONECTARLO (ver el <script> al final):
+           1. Elige proveedor y crea su formulario/lista.
+           2. Copia la URL de envío (form action / endpoint) del proveedor.
+           3. Pégala en NEWSLETTER.endpoint.
+           4. Ajusta emailField (nombre del campo que espera el proveedor)
+              y, si hace falta, extraFields (id de lista, tags, etc.).
+           5. Si el proveedor exige consentimiento explícito, descomenta
+              el bloque "CONSENTIMIENTO" de este formulario.
+         ============================================================ -->
+    <section class="newsletter" id="newsletter" aria-labelledby="nl-title">
+      <h2 id="nl-title">📩 Aprendemos juntos</h2>
+      <!-- Nombre provisional del newsletter. Cámbialo aquí cuando se defina. -->
+      <p class="pitch">Ideas de tecnología, productividad y gestión de proyectos, y lo que voy aprendiendo mientras construyo y optimizo productos digitales.</p>
+
+      <!-- action vacío a propósito. Con el modo "form" del script, el envío
+           se hace por fetch. Si prefieres el envío nativo del proveedor,
+           pon aquí su URL en action y elimina el listener de submit. -->
+      <form id="newsletter-form" action="" method="post" novalidate>
+        <div class="field">
+          <label class="visually-hidden" for="nl-email">Tu correo electrónico</label>
+          <input
+            id="nl-email"
+            name="email"
+            type="email"
+            inputmode="email"
+            autocomplete="email"
+            placeholder="Tu correo electrónico"
+            required
+            aria-describedby="nl-status nl-fineprint">
+
+          <!-- CONSENTIMIENTO (solo si el proveedor/configuración lo requiere).
+               Para activarlo: descomenta este bloque y añade estilos si quieres.
+          <label class="consent">
+            <input type="checkbox" name="consent" required>
+            Acepto recibir el newsletter de Kery Pérez y he leído la política de privacidad.
+          </label>
+          -->
+
+          <!-- Honeypot anti-spam: campo señuelo que los humanos no ven.
+               Si llega con contenido, el script descarta el envío. -->
+          <div class="hp" aria-hidden="true">
+            <label for="nl-website">No completar este campo</label>
+            <input id="nl-website" name="website" type="text" tabindex="-1" autocomplete="off">
+          </div>
+
+          <button class="btn" type="submit" id="nl-submit">Quiero suscribirme</button>
+        </div>
+
+        <!-- Mensajes de estado: el script escribe aquí.
+             role="status" + aria-live los anuncia a lectores de pantalla. -->
+        <p class="msg" id="nl-status" role="status" aria-live="polite"></p>
+      </form>
+
+      <p class="fineprint" id="nl-fineprint">Sin spam. Solo contenido que valga la pena abrir.</p>
+    </section>
+
+    <!-- ============================================================
+         HABLEMOS
+         Por ahora abre tu correo. Puedes cambiarlo por un formulario o agenda.
+         ============================================================ -->
+    <ul class="links">
+      <li>
+        <a class="link" href="mailto:kery.aph@gmail.com" data-link="hablemos">
+          <span class="icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M22 2 11 13"/><path d="M22 2l-7 20-4-9-9-4z"/></svg>
+          </span>
+          <span class="text">
+            <span class="title">Hablemos</span>
+            <span class="desc">Proyectos, colaboraciones y oportunidades</span>
+          </span>
+          <svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+        </a>
+      </li>
+    </ul>
+
+    <footer>© 2026 Kery Pérez</footer>
+  </main>
+
+  <script>
+    /* ============================================================
+       NEWSLETTER: CONFIGURACIÓN Y CONEXIÓN AL PROVEEDOR
+       ------------------------------------------------------------
+       Aquí (y solo aquí) se conecta el proveedor de email marketing.
+
+       No se guarda ningún correo en este archivo, en localStorage
+       ni en el repositorio: el email solo viaja al endpoint que
+       configures.
+       ============================================================ */
+    const NEWSLETTER = {
+      /* >>> PASO 1: URL de envío del proveedor.
+         Mientras esté vacío ("") el formulario NO envía nada y muestra
+         el mensaje "notReady". */
+      endpoint: "",
+
+      /* >>> PASO 2: cómo enviar los datos.
+         "form" → application/x-www-form-urlencoded (lo más común en
+                  formularios embebidos de proveedores).
+         "json" → application/json (para APIs/endpoints que lo pidan). */
+      format: "form",
+
+      /* >>> PASO 3: nombre del campo de email que espera el proveedor
+         (varía: "email", "EMAIL", "email_address", etc.). */
+      emailField: "email",
+
+      /* >>> PASO 4 (opcional): campos extra que el proveedor requiera,
+         por ejemplo el id de la lista, etiquetas o una fuente.
+         Ejemplo: { list_id: "XXXX", source: "link-in-bio" } */
+      extraFields: {},
+
+      /* NOTA SOBRE CORS: si el navegador bloquea la petición porque el
+         proveedor no admite CORS, tienes dos salidas:
+           a) usar el formulario embebido/hosted del proveedor (redirección
+              o iframe) en lugar de fetch, o
+           b) enviar el POST a través de una función serverless propia
+              que guarde la API key en el servidor (nunca en este archivo).
+         Jamás pongas claves privadas de API en código de GitHub Pages:
+         cualquiera puede leerlas. */
+
+      /* Textos de estado (edítalos con tu voz cuando quieras). */
+      messages: {
+        success:  "Listo. Revisa tu correo para confirmar la suscripción.",
+        invalid:  "Escribe un correo válido, por ejemplo nombre@dominio.com.",
+        error:    "No pudimos completar la suscripción. Inténtalo de nuevo en unos minutos.",
+        notReady: "El newsletter todavía no está activo. Vuelve pronto.",
+        sending:  "Enviando…"
+      }
+    };
+
+    (function () {
+      var form   = document.getElementById("newsletter-form");
+      var input  = document.getElementById("nl-email");
+      var button = document.getElementById("nl-submit");
+      var status = document.getElementById("nl-status");
+      var honey  = document.getElementById("nl-website");
+
+      function show(kind, text) {
+        status.className = "msg " + (kind ? "is-" + kind : "");
+        status.textContent = text || "";
+      }
+
+      form.addEventListener("submit", function (event) {
+        event.preventDefault();
+        show("", "");
+        input.removeAttribute("aria-invalid");
+
+        // Validación HTML5 nativa (required + type="email").
+        if (!input.checkValidity()) {
+          input.setAttribute("aria-invalid", "true");
+          show("error", NEWSLETTER.messages.invalid);
+          input.focus();
+          return;
+        }
+
+        // Honeypot: si un bot llenó el campo señuelo, se ignora en silencio.
+        if (honey.value) { return; }
+
+        // Sin proveedor configurado: no se envía nada ni se simula un éxito.
+        if (!NEWSLETTER.endpoint) {
+          show("error", NEWSLETTER.messages.notReady);
+          return;
+        }
+
+        // Arma el payload. Si activas el checkbox de consentimiento en el HTML,
+        // agrégalo aquí: payload.consent = form.elements.consent.checked;
+        var payload = Object.assign({}, NEWSLETTER.extraFields);
+        payload[NEWSLETTER.emailField] = input.value.trim();
+
+        var options = { method: "POST" };
+        if (NEWSLETTER.format === "json") {
+          options.headers = { "Content-Type": "application/json" };
+          options.body = JSON.stringify(payload);
+        } else {
+          options.headers = { "Content-Type": "application/x-www-form-urlencoded" };
+          options.body = new URLSearchParams(payload).toString();
+        }
+
+        button.disabled = true;
+        show("", NEWSLETTER.messages.sending);
+
+        fetch(NEWSLETTER.endpoint, options)
+          .then(function (response) {
+            // Algunos proveedores responden con redirección o cuerpo distinto;
+            // ajusta esta condición a lo que devuelva el tuyo.
+            if (!response.ok) { throw new Error("HTTP " + response.status); }
+            form.reset();
+            show("success", NEWSLETTER.messages.success);
+          })
+          .catch(function () {
+            show("error", NEWSLETTER.messages.error);
+          })
+          .finally(function () {
+            button.disabled = false;
+          });
+      });
+
+      // Quita el estado de error en cuanto la persona vuelve a escribir.
+      input.addEventListener("input", function () {
+        input.removeAttribute("aria-invalid");
+      });
+    })();
+  </script>
+</body>
+</html>
